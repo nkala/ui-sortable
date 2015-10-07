@@ -38,8 +38,16 @@ angular.module('ui.sortable', [])
           }
 
           function hasSortingHelper (element, ui) {
-            var helperOption = element.sortable('option','helper');
-            return helperOption === 'clone' || (typeof helperOption === 'function' && ui.item.sortable.isCustomHelperUsed());
+            // element.sortable('option', 'helper') fails with
+            // Uncaught Error: cannot call methods on sortable prior to initialization; attempted to call method 'option'
+            // when dropped into another array inside a recursive tree structure
+            try {
+              var helperOption = element.sortable('option','helper');
+              return helperOption === 'clone' || (typeof helperOption === 'function' && ui.item.sortable.isCustomHelperUsed());
+            }
+            catch (e) {
+              return false;
+            }
           }
 
           // thanks jquery-ui
