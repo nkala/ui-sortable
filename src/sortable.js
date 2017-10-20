@@ -98,20 +98,6 @@ angular.module('ui.sortable', [])
           }
 
           if (ngModel) {
-
-            // When we add or remove elements, we need the sortable to 'refresh'
-            // so it can find the new/removed elements.
-            scope.$watch('ngModel.length', function() {
-              // Timeout to let ng-repeat modify the DOM
-              $timeout(function() {
-                // ensure that the jquery-ui-sortable widget instance
-                // is still bound to the directive's element
-                if (!!getSortableWidgetInstance(element)) {
-                  element.sortable('refresh');
-                }
-              }, 0, false);
-            });
-
             callbacks.start = function(e, ui) {
               if (opts['ui-floating'] === 'auto') {
                 // since the drag has started, the element will be
